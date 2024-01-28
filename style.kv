@@ -1,0 +1,131 @@
+
+<Style>:
+    # name_user:name_user
+    # family_user:family_user
+    # number_user:number_user
+    user_photo:user_photo
+    ml:ml
+    mn:mn 
+    MDScreenManager:
+        id:mn 
+# [[[MAIN]]]
+        MDScreen:
+            name:'main'
+            MDScreen:
+                name:'background'
+                Image:
+                    source:'background.jpg'
+                    allow_stretch:True
+                    keep_ratio:False         
+            MDScreen:
+                name:'main'
+                MDBoxLayout:
+                    orientation: 'vertical'
+                    MDTopAppBar:
+                        size_hint:1,0.083
+                        title:'AZener'
+                        left_action_items:[['information-slab-circle',lambda x:root.about(),'About']]
+                        right_action_items:[['microsoft-xbox-controller-menu',lambda x:meno.set_state('open'),'Information']]
+                    MDScrollView:
+                        size_hint: 1, 0.917
+                        MDList:
+                            id:ml
+                            MDLabel:
+                                text:'\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n  There is not Chat   '
+                                halign:'center'
+                                font_size:21
+                                theme_text_color:'Hint'
+            MDScreen:
+                MDFloatingActionButton:
+                    icon:'chat-plus-outline'
+                    pos_hint: {'center_x': 0.96,'center_y': 0.056}
+                    on_press:root.new_chat()
+            MDScreen:
+                name:'main-menu'
+                MDNavigationDrawer:
+                    id:meno 
+                    size_hint:0.36,1
+                    anchor: "right"
+                    ScrollView:
+                        MDList:
+                            MDNavigationDrawerHeader:
+                                id:user_photo
+                                title:'USER'
+                                source:'default-user.png'
+                            MDNavigationDrawerDivider:                 
+                            MDNavigationDrawerLabel:
+                                id:name_user
+                                text:'Name : '+str(root.user_info['name'])
+                            MDNavigationDrawerLabel:
+                                id:family_user
+                                text:'Family : '+str(root.user_info['family'])
+                            MDNavigationDrawerLabel:
+                                id:number_user
+                                text:'Number : '+str(root.user_info['number'])
+                            MDNavigationDrawerDivider:
+                            OneLineIconListItem:
+                                text:'AddUserInfo'
+                                text_color:'#4a5789'
+                                on_press:root.add_user()
+                                IconLeftWidget:
+                                    icon:'account-multiple-plus'
+                                    on_press:root.add_user()
+                            OneLineIconListItem:
+                                text:'AddUserPhoto'
+                                text_color:'#4a5789'
+                                on_press:root.add_user_photo()
+                                IconLeftWidget:
+                                    icon:'account'
+                                    on_press:root.add_user_photo()
+                            OneLineListItem:
+                                text:'BackHome'
+                                on_press:
+                                    meno.set_state('close')
+# [[[FAKE]]]
+        MDScreen:
+            name:'fake'
+            MDScreen:
+                name:'background'
+                Image:
+                    source:'chat-background.jpg'
+                    allow_stretch:True
+                    keep_ratio:False 
+            MDScreen:
+                MDAnchorLayout:
+                    anchor_y:'top'
+                    MDLabel:
+                        id:lbl_chat
+                        text:'' 
+                        halign:'center'
+                        size_hint: 1, 0.1 
+                        md_bg_color:'teal'
+                MDAnchorLayout:
+                    anchor_x:'center'
+                    anchor_y:'bottom'
+                    MDBoxLayout:
+                        orientation: 'vertical'
+                        MDTextField:
+                            id:txt 
+                            # mode:'round'
+                            multiline:True
+                        MDFillRoundFlatButton: 
+                            text:'send'
+                            pos_hint: {'center_x': 0.53}
+                            on_press:root.messages()
+            MDScreen:
+                MDAnchorLayout:
+                    anchor_x:'center'
+                    anchor_y:'center'
+                    MDScrollView:
+                        size_hint:0.86,0.46
+                        MDList:
+                            id:ml2
+            MDScreen:
+                MDFloatLayout:
+                    MDFillRoundFlatButton:
+                        text:'Back'
+                        on_press:
+                            mn.current='main'
+                            ml2.clear_widgets()
+                        pos_hint: {'center_x': 0.96,'center_y': 0.868}
+
